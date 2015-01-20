@@ -1,0 +1,14 @@
+<launch>
+	<node name="Control" pkg="beaglebone" type="Control_Flow" output="screen"> </node>
+	<node name="Inverse_Kinematics" pkg="beaglebone" type="Inverse_Kinematics output="screen"> </node>
+	<node name="Sanity_Check" pkg="beaglebone" type="Sanity_Check" output="screen"> </node>
+	<node name="Module_Info" pkg="beaglebone" type="Module_Info" output="screen"> </node>
+	<node name="State_Estimation" pkg="beaglebone" type="State_Estimation" output="screen"> </node>
+	<node name="State_Estimation_OLD" pkg="beaglebone" type="State_Estimation_OLD" output="screen"> </node>
+	<node name="Protocol_Controller_CAN" pkg="beaglebone" type="Protocol_Controller_CAN" output="screen"> </node>
+	<node name="Error_Handler" pkg="beaglebone" type="Error_Handler" output="screen"> </node>
+	<node name="Motion_Controller" pkg="beaglebone" type="Motion_Controller" output="screen"> </node>
+	<node name="LRS_Converter" pkg="beaglebone" type="LRS_Converter" output="screen"> </node>
+	<node name="Obstruction" pkg="beaglebone" type="Obstruction" output="screen"></node>
+
+</launch>

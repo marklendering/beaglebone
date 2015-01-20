@@ -1,0 +1,26 @@
+#init params PID:
+float32 Pgain
+float32 Igain
+float32 Dgain
+
+float32 pGainAngular
+float32 iGainAngular
+float32 pGainSpeed
+
+
+#init params platform (mm):
+int32 wheelDiameter
+int32 wheelDistance
+int32 widthCar
+
+#init params velocity (e.d)
+float32 defaultSpeed 	#(m/s)
+float32 defaultAngular	#(rad/s)
+
+float32 speedLimit	#(m/s)
+float32 speedAngular	#(rad/s)
+
+#other init params
+bool verbose
+int32 period		#(Hz)
+---
