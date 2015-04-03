@@ -1,0 +1,8 @@
+demcon_config: {
+RobotId: demconRobot,
+RobotType: Dcon,
+WheelRadius: 0.085,
+WheelDIstance: 0.283,
+MinSpeed: 0.1,
+MaxSpeed: 5.0
+}

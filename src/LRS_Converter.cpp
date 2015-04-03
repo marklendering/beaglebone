@@ -189,7 +189,7 @@ public:
 			int LengthOfBuff = sizeof( Range_buffer ) / sizeof( int );
 			for(int meow = 0 ; meow < LengthOfBuff ; meow++){
 				LaserScan_msg.ranges.push_back(Range_buffer[meow]);
-				LaserScan_msg.intensities.push_back(Range_buffer[meow]);
+				LaserScan_msg.intensities.push_back(Range_buffer[meow]);//?? Intens_buffer instead of Range_buffer>>????
 			}
 
 			LaserScan_pub.publish(LaserScan_msg);				//publish
