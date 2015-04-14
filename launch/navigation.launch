@@ -1,0 +1,36 @@
+<launch>
+	
+   <node name="slam_gmapping" pkg="gmapping" type="slam_gmapping" args="scan:=/laser/scan">
+        <param name="maxRange" value="4.5"/>
+        <param name="maxUrange" value="4"/>
+        <param name="delta" value="0.05" />
+        <param name="srr" value="0.1" />
+        <param name="srt" value="0.2" />
+        <param name="str" value="0.1" />
+        <param name="stt" value="0.2" />
+        <param name="angularUpdate" value="0.1" />
+        <param name="linearUpdate" value="0.1" />
+        <param name="temporalUpdate" value="-1" />
+        <param name="xmin" value="-10" />
+        <param name="ymin" value="-10" />
+        <param name="xmax" value="10" />
+        <param name="ymax" value="10" />
+    </node>
+	
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find beaglebone)/demconRobot.xacro'" />
+	<node name="robotPublisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen" />
+
+	<node name="move_base" pkg="move_base" type="move_base" output="screen">
+        <rosparam file="$(find beaglebone)/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find beaglebone)/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find beaglebone)/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find beaglebone)/global_costmap_params.yaml" command="load" />
+        <rosparam file="$(find beaglebone)/base_local_planner_params.yaml" command="load" />
+    </node>
+	<node name="rviz" pkg="rviz" type="rviz" />
+	
+	<rosparam file="$(find beaglebone)/demcon_config.yaml" command="load"/>
+	<node name="RobotController" pkg="beaglebone" type="RobotController" output="screen"></node>
+	
+</launch>
+
