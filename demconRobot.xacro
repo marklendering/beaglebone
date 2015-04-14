@@ -28,6 +28,7 @@
 	<joint name="base_footprint_joint" type="fixed">
 		<parent link="base_footprint" />
 		<child link="base_link" />
+		<origin rpy="0 0 ${-0.5*M_PI}"/>
 	</joint>
 	
 	<link name="wheelFrontLeft">

@@ -31,8 +31,8 @@ int main(int argc, char** argv)
 
 
 	while(n.ok()){
-		driver.doUpdate();
 		ros::spinOnce();
+		driver.doUpdate();
 		loop_rate.sleep();
 	}
 
