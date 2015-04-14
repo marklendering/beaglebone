@@ -4,5 +4,5 @@
 
 	<rosparam file="$(find beaglebone)/demcon_config.yaml" command="load"/>
 	<node name="MotionSensorDriver" pkg="beaglebone" type="MotionSensorDriver" output="screen"> </node>
-	<node name="RobotController" pkg="beaglebone" type="RobotController" output="screen"></node>
+	<!-- <node name="RobotController" pkg="beaglebone" type="RobotController" output="screen"></node> -->
 </launch>
