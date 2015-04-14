@@ -133,7 +133,7 @@ namespace DemconRobot
 				scan.intensities.clear();
 				reset_counter = 0;
 				start_flag = false;
-				printf("sent package! \n \r");
+				//printf("sent package! \n \r");
 			}
 			LRSI_set = false;
 			LRSR_set = false;
@@ -187,7 +187,7 @@ namespace DemconRobot
 				beaglebone::WheelDistances msg;
 				msg.right = deltaDistanceRight;
 				msg.left = deltaDistanceLeft;
-				printf("distanceLeft: %f , distanceRight: %f \r \n", deltaDistanceLeft, deltaDistanceRight);
+				//printf("distanceLeft: %f , distanceRight: %f \r \n", deltaDistanceLeft, deltaDistanceRight);
 				WheelDistances_pub.publish(msg);
 				DISTR_set = false;
 				DISTL_set = false;
@@ -225,7 +225,7 @@ namespace DemconRobot
 				msg.right = speedRight;
 				msg.left = speedLeft;
 				//WheelVelocities_pub.publish(msg);
-				printf("speedRight: %f , speedLeft: %f \r \n", speedRight, speedLeft);
+				//printf("speedRight: %f , speedLeft: %f \r \n", speedRight, speedLeft);
 			}
 			//if both bools set publish speed, or for now, just print speed.
 		}
@@ -254,6 +254,9 @@ namespace DemconRobot
 		buffer[4] = ((converter.Int >> 16) & 0xff);
 		buffer[5] = ((converter.Int >> 24) & 0xff);
 		canDriver->write_Bus(buffer, 6, MCRIGHT);
+		//printf("left speed: %f, right speed: %f \n \r", WheelVelocity->left, WheelVelocity->left);
+		setRobotState(START);
+
 	}
 
 	//getIMU data -> temp, gyro, accelerometer, compass data

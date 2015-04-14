@@ -27,7 +27,7 @@ int main(int argc, char** argv)
 	}
 
 
-	ros::Rate loop_rate(100); //10hz
+	ros::Rate loop_rate(50); //10hz
 
 
 	while(n.ok()){
