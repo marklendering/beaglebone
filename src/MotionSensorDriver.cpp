@@ -73,6 +73,7 @@ namespace DemconRobot
 		requestCANData('V', ALLMBEDS);
 		getCanData();
 		getCanData();
+		//ros::spinOnce();
 		//request candata for distance traveled
 		//getdata for mbed one
 		//getdata for mbed two
