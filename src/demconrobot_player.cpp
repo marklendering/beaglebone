@@ -35,8 +35,8 @@ int main(int argc, char** argv)
 
 
 	while(n.ok()){
-		demconRobotPlayer.doUpdate();
 		ros::spinOnce();
+		demconRobotPlayer.doUpdate();
 		loop_rate.sleep();
 	}
 
