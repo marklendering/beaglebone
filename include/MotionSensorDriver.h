@@ -83,6 +83,7 @@ namespace DemconRobot
 			float deltaDistanceLeft;
 			float speedRight;
 			float speedLeft;
+			int frequencyCounter;
 	};
 	
 	union{

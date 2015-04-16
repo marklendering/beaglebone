@@ -27,11 +27,10 @@ int main(int argc, char** argv)
 	}
 
 
-	ros::Rate loop_rate(10); //10hz
-
+	ros::Rate loop_rate(6000); //10hz
 
 	while(n.ok()){
-		ros::spinOnce();
+		//ros::spinOnce();
 		driver.doUpdate();
 		loop_rate.sleep();
 	}

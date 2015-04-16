@@ -38,7 +38,7 @@ namespace DemconRobot
 		//replace LRS_RAW_pub with LaserScan 
 		WheelVelocities_pub = node_.advertise<beaglebone::WheelVelocities>("Wheel_Current_Velocities", 100);
 		WheelDistances_pub = node_.advertise<beaglebone::WheelDistances>("Wheel_Delta_Distance", 100);
-
+		frequencyCounter = 0;
 	}
 
 	MotionSensorDriver::~MotionSensorDriver()
@@ -67,13 +67,18 @@ namespace DemconRobot
 		requestCANData(GET_LRS);
 		getCanData();
 		getCanData();
-		requestCANData('D', ALLMBEDS);
-		getCanData();
-		getCanData();
-		requestCANData('V', ALLMBEDS);
-		getCanData();
-		getCanData();
-		//ros::spinOnce();
+		frequencyCounter++;
+		if(frequencyCounter == 120)
+		{
+			requestCANData('D', ALLMBEDS);
+			getCanData();
+			getCanData();
+			requestCANData('V', ALLMBEDS);
+			getCanData();
+			getCanData();
+			ros::spinOnce();
+			frequencyCounter = 0;
+		}
 		//request candata for distance traveled
 		//getdata for mbed one
 		//getdata for mbed two
