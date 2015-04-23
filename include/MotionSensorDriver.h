@@ -5,6 +5,9 @@
 #include <ros/ros.h>
 #include <CanDriver.h>
 #include <sensor_msgs/LaserScan.h>
+#include <sensor_msgs/Imu.h>
+#include <geometry_msgs/Quaternion.h>
+#include <tf/transform_broadcaster.h>
 
 #include "beaglebone/IMU.h"
 #include "beaglebone/LRS.h"
@@ -32,6 +35,12 @@
 #define CONFIGURE	0
 #define STOP		2
 #define RESET 		3
+#define AKM		0x63
+#define ANS_AKM		0x62
+#define IMUACC		0x61
+#define ANS_ACC		0x60
+#define IMUGYR		0x59
+#define ANS_GYR		0x58
 
 namespace DemconRobot
 {
@@ -44,12 +53,14 @@ namespace DemconRobot
 
 			ros::Publisher LRS_RAW_pub;
 			ros::Publisher Laser_pub;
+			ros::Publisher Imu_pub;
 			ros::Publisher IMU_RAW_pub;
 			ros::Publisher WheelVelocities_pub;
 			ros::Publisher WheelDistances_pub;
 
 			beaglebone::LRS LRS_msg;
 			std::string frame_id;
+			std::string imu_id;
 
 			MotionSensorDriver();
 			~MotionSensorDriver();
@@ -65,17 +76,22 @@ namespace DemconRobot
 		private:
 			CanDriver* canDriver;
 			sensor_msgs::LaserScan scan;
+			sensor_msgs::Imu imu;
 			void getCanData();
 			void getLRSData(char readBuffer[8], int length, int canId);
 			void requestCANData(int canId);
 			void requestCANData(char command, int canId);
 			bool getSpeed(char readBuffer[8], int length, int canId);
 			void setSpeed(const beaglebone::WheelVelocities::ConstPtr& WheelVelocity);
+			void getIMU(char readBuffer[8], int length, int canId);
 			void convertLRStoLaserScan(beaglebone::LRS LRS_RAW);
 			void getMotorDistance(char readBuffer[8], int length, int canId);
 			uint8_t reset_counter;
 			bool LRSR_set, LRSI_set, DISTR_set, DISTL_set, speedR_set, speedL_set;
 			bool start_flag, finish_flag;
+			bool acc_set, gyr_set;
+			float Adata[3];
+			float Gdata[3];
 			int itter, loop_count;
 			float Range_buffer[360];
 			float Intens_buffer[360];
@@ -83,6 +99,7 @@ namespace DemconRobot
 			float deltaDistanceLeft;
 			float speedRight;
 			float speedLeft;
+			float create_float_from_bytes(char * buf, int offset); 
 	};
 	
 	union{
