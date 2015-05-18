@@ -52,9 +52,11 @@ DWAPlannerROS:
   acc_lim_y: 0.0
   acc_lim_theta: 5.0
 
+#tolerance parameters
   yaw_goal_tolerance: 1
   xy_goal_tolerance: 0.15
-  latch_xy_goal_tolerance: true
+  #robot will rotate on spot if location was reached and this set to true.
+  latch_xy_goal_tolerance: false
 
   # Forward simulation parameters:
   sim_time: 1.7  # default 1.7
