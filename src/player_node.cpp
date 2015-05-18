@@ -3,7 +3,7 @@
 #include <player_node.h>
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2_ros/transform_broadcaster.h>
-
+#define EKF
 
 using namespace std;
 
@@ -24,7 +24,7 @@ namespace DemconRobot
 		private_nh.getParam("demcon_config/WheelRadius", wheelRadius);
 		ROS_INFO("I get wheel radius: [%f]", wheelRadius);
 
-		wheelDis = 0.510;
+		wheelDis = 0.480;
 		private_nh.getParam("demcon_config/WheelDistance", wheelDis);
 		ROS_INFO("I get wheel distance: [%f]", wheelDis);
 
@@ -152,17 +152,19 @@ namespace DemconRobot
 		m_x += delta_x;
 		m_y += delta_y;
 
-
+		#ifndef EKF
 		/////////NEW ///////
-		tf::Quaternion odom_quat;
-		odom_quat.setRPY(0,0,m_theta);
+//		tf::Quaternion odom_quat;
+//		odom_quat.setRPY(0,0,m_theta);
+//
+//		tf::Transform transform;
+//		transform.setOrigin(tf::Vector3(m_x, m_y, 0.0));
+//		transform.setRotation(odom_quat);
+//
+//		tf::TransformBroadcaster broadcaster;
+//		broadcaster.sendTransform(tf::StampedTransform(transform, current_time, "odom", "base_footprint"));
+		#endif
 
-		tf::Transform transform;
-		transform.setOrigin(tf::Vector3(m_x, m_y, 0.0));
-		transform.setRotation(odom_quat);
-
-		tf::TransformBroadcaster broadcaster;
-		broadcaster.sendTransform(tf::StampedTransform(transform, current_time, "odom", "base_footprint"));
 
 		nav_msgs::Odometry odom;
 		odom.header.stamp = current_time;
@@ -170,14 +172,28 @@ namespace DemconRobot
 
 		odom.pose.pose.position.x = m_x;
 		odom.pose.pose.position.y = m_y;
+		//odom.pose.covariance[0] = 0.001;
+		//odom.pose.covariance[7] = 0.001;
+		//odom.pose.covariance[14] = 1000000;
+		//odom.pose.covariance[21] = 1000000;
+		//odom.pose.covariance[28] = 1000000;
+		//odom.pose.covariance[35] = 1.0;
 
 		geometry_msgs::Quaternion odom_quat2 = tf::createQuaternionMsgFromYaw(m_theta);
 		odom.pose.pose.orientation = odom_quat2;
 
-		odom.child_frame_id = "base_footprint";
+//		odom.child_frame_id = "base_footprint";
 		odom.twist.twist.linear.x = vx;
 		odom.twist.twist.linear.y = vy;
 		odom.twist.twist.angular.z = vth;
+
+		//odom.twist.covariance[0] = 0.001;
+		//odom.twist.covariance[7] = 0.001;
+		//odom.twist.covariance[14] = 1000000;
+		//odom.twist.covariance[21] = 1000000;
+		//odom.twist.covariance[28] = 1000000;
+		//odom.twist.covariance[35] = 0.01;
+		//odom.twist.covariance = odom.pose.covariance;
 
 		odom_pub.publish(odom);
 

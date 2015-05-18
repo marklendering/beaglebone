@@ -23,6 +23,11 @@
 				<color rgba="0.5 0.5 0.5 1"/>
 			</material>
 		</visual>
+		<collision>
+			<geometry>
+				<cylinder length="0.2" radius="0.4" />
+			</geometry>
+		</collision>
 	</link>
 
 	<joint name="base_footprint_joint" type="fixed">
@@ -85,6 +90,17 @@
 		</visual>
 	</link>
 	
+	<link name="base_imu">
+		<visual>
+			<geometry>
+				<box size="0.001 0.001 0.001" />
+			</geometry>
+			<material name="white">
+				<color rgba="1 1 1 1"/>
+			</material>
+		</visual>
+	</link>
+	
 	<joint name="base_to_front_left_wheel" type="fixed">
 		<parent link="base_link"/>
 		<child link="wheelFrontLeft"/>
@@ -114,5 +130,11 @@
 		<parent link="base_link"/>
 		<child link="laser_scanner"/>
 		<origin xyz="0 0.18 0" rpy="0 0 ${-0.5*M_PI}"/>
+	</joint>
+	
+	<joint name="base_to_imu" type="fixed">
+		<parent link="base_link"/>
+		<child link="base_imu"/>
+		<origin xyz="0 0 0.001" rpy="0 0 0"/>
 	</joint>
 </robot>

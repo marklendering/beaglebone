@@ -31,7 +31,11 @@ int main(int argc, char** argv)
 	}
 
 
+<<<<<<< HEAD
 	ros::Rate loop_rate(10); //10hz
+=======
+	ros::Rate loop_rate(240); //10hz
+>>>>>>> temp-work
 
 
 	while(n.ok()){

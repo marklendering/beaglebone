@@ -8,6 +8,22 @@ find_package(catkin REQUIRED COMPONENTS
 find_package(Boost REQUIRED)
 
 
+find_package(Qt4 REQUIRED COMPONENTS QtCore QtGui)
+include(${QT_USE_FILE})
+#include_directories(${CMAKE_CURRENT_BINARY_DIR})
+#file(GLOB QT_FORMS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.ui)
+#file(GLOB QT_RESOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} resources/*.qrc)
+#file(GLOB_RECURSE QT_MOC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINKS *.hpp)
+
+#QT4_ADD_RESOURCES(QT_RESOURCES_CPP ${QT_RESOURCES})
+#QT4_WRAP_CPP(QT_MOC_HPP ${QT_MOC})
+#QT4_WRAP_UI(QT_FORMS_HPP ${QT_FORMS})
+
+#file(GLOB_RECURSE QT_SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINKS *.cpp)
+
+
+#${QT_LIBRARIES} ${ROS_LIBRARIES} ${catkin_LIBRARIES})
+
 add_message_files(
   DIRECTORY
   msg
@@ -33,9 +49,11 @@ generate_messages(
 catkin_package(
   CATKIN_DEPENDS message_runtime roscpp )
 
-include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS} ${QT_LIBRARIES})
 
 
+add_executable(ui src/ui.cpp)
+target_link_libraries(ui ${QT_LIBRARIES} ${ROS_LIBRARIES} ${catkin_LIBRARIES})
 
 #sensor and motor drivers
 add_executable(MotionSensorDriver src/demconrobot_MotionSensorDriver.cpp)
@@ -49,7 +67,6 @@ add_dependencies(Driver beaglebone_gencpp)
 #robot controller
 
 add_executable(RobotController src/demconrobot_player.cpp src/player_node.cpp) 
-#add_dependencies(RobotController package_name_generate_messages_cpp)
 target_link_libraries(RobotController ${catkin_LIBRARIES})
 target_link_libraries(RobotController ${Boost_LIBRARIES})
 add_dependencies(RobotController beablebone_gencpp)
