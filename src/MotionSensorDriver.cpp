@@ -198,7 +198,7 @@ namespace DemconRobot
 
 		if(acc_set && gyr_set)
 		{
-			imu.header.stamp = ros::Time::now() - ros::Duration(0.3);
+			imu.header.stamp = ros::Time::now() - ros::Duration(0.6);
 
 			geometry_msgs::Quaternion orientation;// = tf::createQuaternionMsgFromYaw(0.0);
 			gyr_set = false;
@@ -209,12 +209,12 @@ namespace DemconRobot
 			float roll = Gdata[0] * (PI/(131 * 180));
 			float pitch = Gdata[1] * (PI/(131 * 180));
 			float yaw = Gdata[2] * (PI/(131*180));
-			imu.angular_velocity.x = 0;//roll;
-			imu.angular_velocity.y = 0;//pitch;
+			imu.angular_velocity.x = roll;
+			imu.angular_velocity.y = pitch;
 			imu.angular_velocity.z = yaw;
-			imu.angular_velocity_covariance[0] = 99999; //0.00001;
-			imu.angular_velocity_covariance[4] = 99999; //0.00001;
-			imu.angular_velocity_covariance[8] = 0.01;
+			//imu.angular_velocity_covariance[0] = 0.001;
+			//imu.angular_velocity_covariance[4] = 0.001;
+			//imu.angular_velocity_covariance[8] = 0.001;
 			//tf::Quaternion orientation_quat = tf.transformations.quaternion_from_euler(0,0,yaw);
 			//imu.orientation = tf::createQuaternionMsgFromRollPitchYaw(roll, pitch, yaw);
 			imu.orientation = tf::createQuaternionMsgFromYaw(yaw);
@@ -222,18 +222,18 @@ namespace DemconRobot
 			//imu.orientation.y = orientation_quat[1];
 			//imu.orientation.z = orientation_quat[2];
 			//imu.orientation.w = orientation_quat[3];
-			imu.orientation_covariance[0] = 9999999;
-			imu.orientation_covariance[4] = 9999999;
-			imu.orientation_covariance[8] = 0.1;
+			//imu.orientation_covariance[0] = 0;
+			//imu.orientation_covariance[4] = 0;
+			//imu.orientation_covariance[8] = 0.001;
 
 			//imu.orientation = orientation;
 
-			imu.linear_acceleration.x = 0;//Adata[0] * (9.81/16834);
-			imu.linear_acceleration.y = 0;//Adata[1] * (9.81/16834);
-			imu.linear_acceleration.z = 0; // Adata[2] * (9.81/16834);
-			imu.linear_acceleration_covariance[0] = 99999999;//1.0;
-			imu.linear_acceleration_covariance[4] = 99999999;//1.0;
-			imu.linear_acceleration_covariance[8] = 99999999;//1.0;
+			imu.linear_acceleration.x = Adata[0] * (9.81/16834);
+			imu.linear_acceleration.y = Adata[1] * (9.81/16834);
+			imu.linear_acceleration.z = 0;//Adata[2] * (9.81/16834);
+			//imu.linear_acceleration_covariance[0] = 0.001;
+			//imu.linear_acceleration_covariance[4] = 0.001;
+			//imu.linear_acceleration_covariance[8] = 0.001;
 
 
 			//set orientation covariance
